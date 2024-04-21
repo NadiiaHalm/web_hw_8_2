@@ -27,6 +27,7 @@ def main():
         contact.email_sent = True
         contact.save()
         print(f"Contact {contact_id} marked as sent")
+        ch.basic_ack(delivery_tag=method.delivery_tag)
 
     channel.basic_qos(prefetch_count=1)
     channel.basic_consume(queue=QUEUE, on_message_callback=callback)
